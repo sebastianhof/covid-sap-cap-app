@@ -9,7 +9,7 @@ entity covid: cuid {
    latitude : Double;
    longitude : Double;
    cases: Integer;
-   date: Date;
+   reportDate: Date;
 }
 
 entity DeathCases : covid {
