@@ -15,14 +15,14 @@
   "scripts": {
     "start": "npx cds run"
   },
-  "devDependencies": {
-    "sqlite3": "^4.1.1"
-  },
   "cds": {
     "requires": {
       "db": {
         "kind": "sqlite"
       }
     }
+  },
+  "devDependencies": {
+    "sqlite3": "^4.1.1"
   }
 }

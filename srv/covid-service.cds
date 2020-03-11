@@ -1,11 +1,9 @@
-using cap.covid.project as db from '../db/schema';
+using { cap.covid as db } from '../db/schema';
 
-service CovidCasesService {
+service CovidService {
+    action reset();
 
     entity ConfirmedCases as projection on db.ConfirmedCases;
     entity DeathCases as projection on db.DeathCases;
     entity RecoveredCases as projection on db.RecoveredCases;
-
-    action reset();
-
 }

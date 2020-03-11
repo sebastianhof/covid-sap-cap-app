@@ -2,7 +2,6 @@ const https = require('https');
 const csvtojson = require('csvtojson');
 const moment = require('moment');
 const crypto = require('crypto');
-const { generateDateFields } = require('./helper');
 
 const PROVINCE_FIELD = 'Province/State';
 const COUNTRY_FIELD = 'Country/Region';
@@ -10,7 +9,20 @@ const LAT_FIELD = 'Lat';
 const LONG_FIELD = 'Long';
 
 
-function loadData(url) {
+const generateFields = () => {
+    let currentDate = new Date(2020, 1, 22);
+    const endDate = new Date();
+    const dates = [];
+
+    while (currentDate <= endDate) {
+        dates.push(moment(currentDate).format('M/D/YY'));
+        currentDate = currentDate = moment(currentDate).add(1, 'days');
+    }
+
+    return dates;
+}
+
+const loadData = async (url) => {
     return new Promise((resolve, reject) => {
        https.get(url, (resp) => {
                let data = '';
@@ -28,7 +40,7 @@ function loadData(url) {
                    .then((csvRows) => {
                        const data = csvRows.flatMap(row => { 
 
-                           var dateFields = generateDateFields();
+                           var dateFields = generateFields();
                            return dateFields.map(d => {
 
                                const hash = {
@@ -68,45 +80,27 @@ function loadData(url) {
 
 } 
 
-
-
 module.exports = async (srv) => {
-    const { ConfirmedCases, DeathCases, RecoveredCases } = srv.entities('cap.covid.project');
+    const { ConfirmedCases, DeathCases, RecoveredCases } = srv.entities('cap.covid');
 
     const init = async () => {
 
-        DELETE.from(ConfirmedCases);
-        DELETE.from(DeathCases);
-        DELETE.from(RecoveredCases);
+        await DELETE.from(ConfirmedCases);
+        await DELETE.from(DeathCases);
+        await DELETE.from(RecoveredCases);
 
-        // INSERT.into(ConfirmedCases).entries({
-        //     cases:989,
-        //     country:"Mainland China",
-        //     ID:"de50277562af4d10cd95b5de0240ad9e",
-        //     reportDate: new Date(),
-        //     latitude:31.8257,
-        //     longitude:117.2264,
-        //     province:"Anhui"
-        //  })
+        const confirmedData = await loadData('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv');
+        const deathData = await loadData('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv'); 
+        const recoveredData = await loadData('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Recovered.csv'); 
 
-         loadData('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv').then((data) => {
-            INSERT.into(ConfirmedCases).entries(data);
-        });
-    
-        
-        loadData('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv').then((data) => {
-            INSERT.into(DeathCases).entries(data);
-        }); 
-    
-        loadData('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Recovered.csv').then((data) => {
-            INSERT.into(RecoveredCases).entries(data);
-        }); 
-
+        await INSERT.into(ConfirmedCases).entries(confirmedData); 
+        await INSERT.into(DeathCases).entries(deathData);
+        await INSERT.into(RecoveredCases).entries(recoveredData);
     }
 
-    await init();
 
     srv.on('reset', init);
 
+    await init();
 
 }

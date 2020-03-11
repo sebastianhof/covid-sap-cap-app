@@ -1,25 +1,33 @@
-namespace cap.covid.project;
+namespace cap.covid;
 
-using cuid from '@sap/cds/common';
+using { cuid } from '@sap/cds/common';
 
-
-entity covid: cuid {
-   province : String;
-   country  : String;
-   latitude : Double;
-   longitude : Double;
-   cases: Integer;
-   reportDate: Date;
+entity ConfirmedCases {
+  Key ID: String;
+  province : String;
+  country  : String;
+  latitude : Double;
+  longitude : Double;
+  cases: Integer;
+  reportDate: Date;
 }
 
-entity DeathCases : covid {
-
+entity DeathCases {
+  Key ID: String;
+  province : String;
+  country  : String;
+  latitude : Double;
+  longitude : Double;
+  cases: Integer;
+  reportDate: Date;
 }
 
-entity RecoveredCases : covid {
-
-}
-
-entity ConfirmedCases : covid {
-
+entity RecoveredCases {
+  Key ID: String;
+  province : String;
+  country  : String;
+  latitude : Double;
+  longitude : Double;
+  cases: Integer;
+  reportDate: Date;
 }
