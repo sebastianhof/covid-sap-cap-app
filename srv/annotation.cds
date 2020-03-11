@@ -14,13 +14,20 @@ annotate CovidService.ConfirmedCases with @(
 		LineItem: [
 			{ Value: province, Label: 'Province/State' },
 			{ Value: cases, Label: 'Number of Cases' },
-			{ Value: reportDate, Label: 'Report Date' }
+			{ Value: date, Label: 'Report Date' }
+			
+
 		],
 		HeaderInfo: {
 			TypeName: 'ConfirmedCases',
 			TypeNamePlural: 'Confirmed Cases',
 			Description: { Value: cases }
-		}
+		},
+        GeoLocationType: {
+            Latitude: {Value: latitude},
+            Longitude: {Value: longitude},
+            Location: {Value: province}
+        }
         
 	}
 

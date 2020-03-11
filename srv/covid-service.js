@@ -56,7 +56,7 @@ const loadData = async (url) => {
                                    latitude: parseFloat(row[LAT_FIELD]),
                                    longitude: parseFloat(row[LONG_FIELD]),
                                    cases: parseInt(row[d]), 
-                                   reportDate: moment(d, 'M/D/YY').toDate()
+                                   date: moment(d, 'M/D/YY').toDate()
                                }
 
                            });
