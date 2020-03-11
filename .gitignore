@@ -22,6 +22,5 @@ mta_archives/
 *.orig
 *.log
 
-sqlite.db
-sqlite.db-journal
+*.db-journal
 .vscode

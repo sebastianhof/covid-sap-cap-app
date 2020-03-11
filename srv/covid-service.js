@@ -101,13 +101,15 @@ module.exports = async (srv) => {
 
     srv.on('reset', init);
 
-    srv.on('geoJson', async (req) => {
-
-        const { day, month, year} = req.data;
+    srv.on('geojson', async (req) => {
+        const { year, month, day } = req.data;
         
-        const requestDate = moment()
-        // Get cases for wished day
-        var confirmed = await SELECT.from(ConfirmedCases).where({ date: moment().unix() })
+        const requestDate = moment();
+
+
+        var confirmed = await SELECT.from(ConfirmedCases).where({ date: moment([year, month, day]).format('YYYY-MM-DD') });
+        var deaths = await SELECT.from(DeathCases).where({ date: moment([year, month, day]).format('YYYY-MM-DD') });
+        var recovered = await SELECT.from(RecoveredCases).where({ date: moment([year, month, day]).format('YYYY-MM-DD') });
 
 
     });
