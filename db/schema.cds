@@ -9,7 +9,7 @@ entity ConfirmedCases {
   latitude : Double;
   longitude : Double;
   cases: Integer;
-  reportDate: Date;
+  date: Date;
 }
 
 entity DeathCases {
@@ -19,7 +19,7 @@ entity DeathCases {
   latitude : Double;
   longitude : Double;
   cases: Integer;
-  reportDate: Date;
+  date: Date;
 }
 
 entity RecoveredCases {
@@ -29,5 +29,5 @@ entity RecoveredCases {
   latitude : Double;
   longitude : Double;
   cases: Integer;
-  reportDate: Date;
+  date: Date;
 }

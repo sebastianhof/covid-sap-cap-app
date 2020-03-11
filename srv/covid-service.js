@@ -56,7 +56,7 @@ const loadData = async (url) => {
                                    latitude: parseFloat(row[LAT_FIELD]),
                                    longitude: parseFloat(row[LONG_FIELD]),
                                    cases: parseInt(row[d]), 
-                                   date: moment(d, 'M/D/YY').unix()
+                                   date: moment(d, 'M/D/YY').format('YYYY-MM-DD')
                                }
 
                            });
@@ -107,7 +107,7 @@ module.exports = async (srv) => {
         
         const requestDate = moment()
         // Get cases for wished day
-
+        var confirmed = await SELECT.from(ConfirmedCases).where({ date: moment().unix() })
 
 
     });
