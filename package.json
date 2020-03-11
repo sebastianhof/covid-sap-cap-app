@@ -6,7 +6,11 @@
   "license": "ISC",
   "dependencies": {
     "@sap/cds": "^3",
-    "express": "^4"
+    "crypto": "^1.0.1",
+    "csvtojson": "^2.0.10",
+    "express": "^4",
+    "geojson": "^0.5.0",
+    "moment": "^2.24.0"
   },
   "scripts": {
     "start": "npx cds run"

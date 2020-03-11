@@ -3,22 +3,23 @@ namespace cap.covid.project;
 using cuid from '@sap/cds/common';
 
 
-type covid{
-   ID : Integer;
+entity covid: cuid {
    province : String;
    country  : String;
    latitude : Double;
    longitude : Double;
+   cases: Integer;
+   date: Date;
 }
 
-entity Deaths : cuid {
-  covid_deaths : covid;
+entity DeathCases : covid {
+
 }
 
-entity Recovered : cuid {
-  covid_recovered : covid;
+entity RecoveredCases : covid {
+
 }
 
-entity Confirmed : cuid {
-  covid_confirmed : covid;
+entity ConfirmedCases : covid {
+
 }
