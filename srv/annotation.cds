@@ -15,8 +15,6 @@ annotate CovidService.ConfirmedCases with @(
 			{ Value: province, Label: 'Province/State' },
 			{ Value: cases, Label: 'Number of Cases' },
 			{ Value: date, Label: 'Report Date' }
-			
-
 		],
 		HeaderInfo: {
 			TypeName: 'ConfirmedCases',
