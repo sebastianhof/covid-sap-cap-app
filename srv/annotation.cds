@@ -2,6 +2,7 @@ annotate CovidService.ConfirmedCases with {
 	//province @title:'Province';
     country @title:'Country';
     //cases @title:'Cases';
+	date @title:'Date';
 
 }
 
@@ -10,8 +11,9 @@ annotate CovidService.ConfirmedCases with {
 annotate CovidService.ConfirmedCases with @(
 
 	UI: {
-		SelectionFields: [ country ],
+		SelectionFields: [ country, date ],
 		LineItem: [
+			{ Value: country, Label: 'Country' },
 			{ Value: province, Label: 'Province/State' },
 			{ Value: cases, Label: 'Number of Cases' },
 			{ Value: date, Label: 'Report Date' }
