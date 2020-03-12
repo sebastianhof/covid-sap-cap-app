@@ -21,3 +21,6 @@ mta_archives/
 .DS_Store
 *.orig
 *.log
+
+*.db-journal
+.vscode

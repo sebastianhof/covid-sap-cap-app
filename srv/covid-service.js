@@ -1,0 +1,128 @@
+const https = require('https');
+const csvtojson = require('csvtojson');
+const moment = require('moment');
+const crypto = require('crypto');
+const GeoJSON = require('geojson')
+
+const PROVINCE_FIELD = 'Province/State';
+const COUNTRY_FIELD = 'Country/Region';
+const LAT_FIELD = 'Lat';
+const LONG_FIELD = 'Long';
+
+
+const generateFields = () => {
+    let currentDate = new Date(2020, 1, 22);
+    const endDate = new Date();
+    const dates = [];
+
+    while (currentDate <= endDate) {
+        dates.push(moment(currentDate).format('M/D/YY'));
+        currentDate = currentDate = moment(currentDate).add(1, 'days');
+    }
+
+    return dates;
+}
+
+const loadData = async (url) => {
+    return new Promise((resolve, reject) => {
+       https.get(url, (resp) => {
+               let data = '';
+
+               resp.on('data', (chunk) => {
+                   data += chunk;
+               });
+
+               resp.on('end', () => {
+                   csvtojson({
+                       noheader: false,
+                       output: 'json'
+                   })
+                   .fromString(data)
+                   .then((csvRows) => {
+                       const data = csvRows.flatMap(row => { 
+
+                           var dateFields = generateFields();
+                           return dateFields.map(d => {
+
+                               const hash = {
+                                   province: row[PROVINCE_FIELD],
+                                   country: row[COUNTRY_FIELD],
+                                   date: moment(d, 'M/D/YY').toDate()
+                               }
+
+                               return {
+                                   ID: crypto.createHash('md5').update(JSON.stringify(hash)).digest('hex'),
+                                   province: row[PROVINCE_FIELD],
+                                   country: row[COUNTRY_FIELD],
+                                   latitude: parseFloat(row[LAT_FIELD]),
+                                   longitude: parseFloat(row[LONG_FIELD]),
+                                   cases: parseInt(row[d]), 
+                                   date: moment(d, 'M/D/YY').format('YYYY-MM-DD')
+                               }
+
+                           });
+
+                       });                    
+
+                       resolve(data);
+
+                   });
+
+               });
+
+           }
+
+       ).on('error', (err) => {
+           console.log(`Error ${err}`);
+           reject(err);
+       });
+   });
+
+
+} 
+
+module.exports = async (srv) => {
+    const { ConfirmedCases, DeathCases, RecoveredCases } = srv.entities('cap.covid');
+
+    const init = async () => {
+
+        await DELETE.from(ConfirmedCases);
+        await DELETE.from(DeathCases);
+        await DELETE.from(RecoveredCases);
+
+        const confirmedData = await loadData('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv');
+        const deathData = await loadData('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv'); 
+        const recoveredData = await loadData('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Recovered.csv'); 
+
+        await INSERT.into(ConfirmedCases).entries(confirmedData); 
+        await INSERT.into(DeathCases).entries(deathData);
+        await INSERT.into(RecoveredCases).entries(recoveredData);
+    }
+
+
+
+    srv.on('reset', init);
+
+    srv.on('geojson', async (req, resp) => {        
+        // Some default
+        const currentDate = moment().subtract(1, 'days');
+        const year = req.data.year || currentDate.year();
+        const month = req.data.month || currentDate.month();
+        const day = req.data.day || currentDate.date();
+
+        const requestDate = moment([year, month, day]).format('YYYY-MM-DD');
+        console.log(`Getting geojson data from ${requestDate}`);
+
+        var confirmed = await SELECT.from(ConfirmedCases).where({ date: requestDate });
+        //var deaths = await SELECT.from(DeathCases).where({ date: requestDate).format('YYYY-MM-DD') });
+        //var recovered = await SELECT.from(RecoveredCases).where({ date: requestDate).format('YYYY-MM-DD') });
+
+        var data = GeoJSON.parse(confirmed, { Point: [ 'latitude', 'longitude' ] });
+
+        req.reply(JSON.stringify(data));
+        
+    });
+
+    init();
+
+}
