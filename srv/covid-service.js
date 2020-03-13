@@ -2,6 +2,7 @@ const https = require('https');
 const csvtojson = require('csvtojson');
 const moment = require('moment');
 const crypto = require('crypto');
+const GeoJSON = require('geojson')
 
 const PROVINCE_FIELD = 'Province/State';
 const COUNTRY_FIELD = 'Country/Region';
@@ -99,22 +100,29 @@ module.exports = async (srv) => {
     }
 
 
+
     srv.on('reset', init);
 
-    srv.on('geojson', async (req) => {
-        const { year, month, day } = req.data;
+    srv.on('geojson', async (req, resp) => {        
+        // Some default
+        const currentDate = moment().subtract(1, 'days');
+        const year = req.data.year || currentDate.year();
+        const month = req.data.month || currentDate.month();
+        const day = req.data.day || currentDate.date();
+
+        const requestDate = moment([year, month, day]).format('YYYY-MM-DD');
+        console.log(`Getting geojson data from ${requestDate}`);
+
+        var confirmed = await SELECT.from(ConfirmedCases).where({ date: requestDate });
+        //var deaths = await SELECT.from(DeathCases).where({ date: requestDate).format('YYYY-MM-DD') });
+        //var recovered = await SELECT.from(RecoveredCases).where({ date: requestDate).format('YYYY-MM-DD') });
+
+        var data = GeoJSON.parse(confirmed, { Point: [ 'latitude', 'longitude' ] });
+
+        req.reply(JSON.stringify(data));
         
-        const requestDate = moment();
-
-
-        var confirmed = await SELECT.from(ConfirmedCases).where({ date: moment([year, month, day]).format('YYYY-MM-DD') });
-        var deaths = await SELECT.from(DeathCases).where({ date: moment([year, month, day]).format('YYYY-MM-DD') });
-        var recovered = await SELECT.from(RecoveredCases).where({ date: moment([year, month, day]).format('YYYY-MM-DD') });
-
-
     });
 
-    
-    await init();
+    init();
 
 }
