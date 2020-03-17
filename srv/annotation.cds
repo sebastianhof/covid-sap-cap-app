@@ -44,17 +44,48 @@ annotate CovidService.AggregatedCovidCases with {
 }
 
 annotate CovidService.AggregatedCovidCases with @(
-
-	UI: {
-		SelectionFields: [ Country, ReportDate ],
+		UI: {
 		chart: [
 		{title: 'Corona Cases per Country'},
 		{description: 'Line-chart displaying the Cases as per Country'},
 		{chartType: #BAR},
 		{dimensions: [ 'Country' ]},	
 		{measures: [ 'Confirmed', 'Recovered','Deaths']},
-		{position:10}		
-		],
+		{dimensionAttributes: [{
+        dimension: 'Country',
+        role: #CATALOG}],
+		measureAttributes: [{
+        measure: 'Confirmed',
+        role: #CATALOG
+    }]},
+		{qualifier: 'CoronaCasesQualifier'}	
+		]
+
+	}
+	
+);
+
+
+annotate CovidService.AggregatedCovidCases with @(
+
+	UI: {
+		SelectionFields: [ Country, ReportDate ],
+		
+		HeaderInfo: {
+			TypeName: 'ConfirmedCases',
+			TypeNamePlural: 'Cases',
+			Description: { Value: cases }
+		},
+/*         GeoLocationType: {
+            Latitude: {Value: latitude},
+            Longitude: {Value: longitude},
+            Location: {Value: province}
+        } */
+        
+	},
+
+
+	UI: {
 		LineItem: [
 			{ Value: Country, Label: 'Country' },
 			{ Value: Province, Label: 'Province/State' },
@@ -64,18 +95,8 @@ annotate CovidService.AggregatedCovidCases with @(
 			{ Value: Recovered, Label: 'Recovered Cases' },
 			{ Value: Deaths, Label: 'Deaths Cases' },
 			{position: 20}
-		],
-		HeaderInfo: {
-			TypeName: 'ConfirmedCases',
-			TypeNamePlural: 'Confirmed Cases',
-			Description: { Value: cases }
-		},
-/*         GeoLocationType: {
-            Latitude: {Value: latitude},
-            Longitude: {Value: longitude},
-            Location: {Value: province}
-        } */
-        
-	}
+		]
+
+	}	
 
 );
