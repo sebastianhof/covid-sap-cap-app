@@ -1,14 +1,16 @@
+const cds = require('@sap/cds');
+
 const https = require('https');
 const csvtojson = require('csvtojson');
 const moment = require('moment');
 const crypto = require('crypto');
-const GeoJSON = require('geojson')
+const GeoJSON = require('geojson');
+
 
 const PROVINCE_FIELD = 'Province/State';
 const COUNTRY_FIELD = 'Country/Region';
 const LAT_FIELD = 'Lat';
 const LONG_FIELD = 'Long';
-
 
 const generateFields = () => {
     let currentDate = new Date(2020, 1, 22);
@@ -99,7 +101,7 @@ module.exports = async (srv) => {
         await INSERT.into(RecoveredCases).entries(recoveredData);
     }
 
-
+   
 
     srv.on('reset', init);
 

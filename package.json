@@ -6,6 +6,7 @@
   "license": "ISC",
   "dependencies": {
     "@sap/cds": "^3",
+    "@sap/cds-odata-v2-adapter-proxy": "^1.4.21",
     "crypto": "^1.0.1",
     "csvtojson": "^2.0.10",
     "express": "^4",

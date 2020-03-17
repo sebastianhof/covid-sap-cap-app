@@ -64,7 +64,7 @@ FROM
 FROM RecoveredCases as R
 INNER JOIN DeathCases as D
 ON R.country = D.country AND R.province = D.province AND R.date = D.date{
-  key R.ID: String,
+  R.ID: String,
   R.province as RProvince,
   R.country as RCountry,
   R.date as RDate,
