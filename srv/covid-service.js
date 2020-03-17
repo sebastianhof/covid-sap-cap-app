@@ -56,9 +56,9 @@ const loadData = async (url) => {
                                    ID: crypto.createHash('md5').update(JSON.stringify(hash)).digest('hex'),
                                    province: row[PROVINCE_FIELD],
                                    country: row[COUNTRY_FIELD],
-                                   latitude: parseFloat(row[LAT_FIELD]),
-                                   longitude: parseFloat(row[LONG_FIELD]),
-                                   cases: parseInt(row[d]), 
+                                   latitude: parseFloat(row[LAT_FIELD]) || 0,
+                                   longitude: parseFloat(row[LONG_FIELD]) || 0,
+                                   cases: parseInt(row[d]) || 0, 
                                    date: moment(d, 'M/D/YY').format('YYYY-MM-DD')
                                }
 
