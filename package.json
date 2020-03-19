@@ -17,13 +17,20 @@
   "scripts": {
     "start": "npx cds run",
     "build": "cds build/all && cds deploy",
-    "build-mta": "cds build/all && mbt build -p=cf",
+    "build-mta": "mbt build -p=cf",
     "deploy-mta": "cf deploy .\\mta_archives\\cap.covid_1.0.0.mtar"
   },
   "cds": {
+    "hana": {
+      "syntax": "hdi"
+    },
     "requires": {
       "db": {
-        "kind": "hana"
+        "kind": "hana",
+        "model": [
+          "db",
+          "srv"
+        ]
       }
     }
   },

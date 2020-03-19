@@ -1,6 +1,14 @@
-_schema-version: 3.3.0
+_schema-version: 3.1
 ID: cap.covid
 version: 1.0.0
+parameters:
+  enable-parallel-deployments: true  
+build-parameters:
+  before-all:
+   - builder: custom
+     commands:
+      - npm install
+      - npx cds build\/all
 modules:
     - name: cap.covid.router
       type: approuter.nodejs
@@ -37,5 +45,4 @@ resources:
       properties:
         hdi-container-name: ${service-name}
       parameters:
-        service: hanatrial
-        service-alternatives: ["hana"]
+        service: hana
