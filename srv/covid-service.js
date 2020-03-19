@@ -84,7 +84,7 @@ const loadData = async (url) => {
 } 
 
 module.exports = async (srv) => {
-    const { ConfirmedCases, DeathCases, RecoveredCases } = srv.entities('cap.covid');
+    const { ConfirmedCases, DeathCases, RecoveredCases, AggregatedCovidCases } = srv.entities('cap.covid');
 
     const init = async () => {
 
@@ -113,13 +113,10 @@ module.exports = async (srv) => {
         const day = req.data.day || currentDate.date();
 
         const requestDate = moment([year, month, day]).format('YYYY-MM-DD');
-        console.log(`Getting geojson data from ${requestDate}`);
 
-        var confirmed = await SELECT.from(ConfirmedCases).where({ date: requestDate });
-        //var deaths = await SELECT.from(DeathCases).where({ date: requestDate).format('YYYY-MM-DD') });
-        //var recovered = await SELECT.from(RecoveredCases).where({ date: requestDate).format('YYYY-MM-DD') });
+        var cases = await SELECT.from(AggregatedCovidCases).where({ ReportDate: requestDate });
 
-        var data = GeoJSON.parse(confirmed, { Point: [ 'latitude', 'longitude' ] });
+        var data = GeoJSON.parse(cases, { Point: [ 'Latitude', 'Longitude' ] });
 
         req.reply(JSON.stringify(data));
         

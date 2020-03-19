@@ -1,0 +1,13 @@
+{
+    "welcomeFile": "/webapp/",
+    "authenticationMethod": "none",
+    "routes": [{
+        "source": "^/webapp/(.*)$",
+        "target": "$1",
+        "localDir": "webapp/"
+    }, {
+        "source": "^(.*)$",
+        "target": "$1",
+        "destination": "cap.covid.api"
+    }]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "cap.covid.router",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "@sap/approuter": "^6.8.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node node_modules/@sap/approuter/approuter.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

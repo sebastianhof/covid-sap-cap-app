@@ -57,6 +57,8 @@ x.Deaths as Deaths,
 x.RProvince as Province, 
 x.RCountry as Country, 
 x.RDate as ReportDate, 
+C.latitude as Latitude,
+C.longitude as Longitude,
 C.cases as Confirmed
 //SUM(x.Recovered,x.Deaths,C.cases) as TotalCases : Integer
 FROM

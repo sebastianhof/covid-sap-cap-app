@@ -1,0 +1,41 @@
+_schema-version: 3.3.0
+ID: cap.covid
+version: 1.0.0
+modules:
+    - name: cap.covid.router
+      type: approuter.nodejs
+      path: app
+      deployed-after:
+        - cap.covid.srv
+      requires:
+        - name: cap.covid.api
+          group: destinations
+          properties:
+            forwardAuthToken: true
+            strictSSL: false
+            name: cap.covid.api
+            url: ~{url}
+    - name: cap.covid.db
+      type: hdb
+      path: gen/db
+      requires:
+        - name: cap.covid.hdi
+    - name: cap.covid.srv
+      type: nodejs
+      path: gen/srv
+      provides:
+        - name: cap.covid.api
+          properties:
+            url: ${default-url}
+      requires:
+        - name: cap.covid.hdi
+      properties:
+        EXIT: 1
+resources:
+    - name: cap.covid.hdi
+      type: com.sap.xs.hdi-container
+      properties:
+        hdi-container-name: ${service-name}
+      parameters:
+        service: hanatrial
+        service-alternatives: ["hana"]

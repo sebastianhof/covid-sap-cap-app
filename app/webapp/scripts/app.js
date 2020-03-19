@@ -4,21 +4,21 @@ var timeFormatter = d3.timeFormat('%Y-%m-%dt%H:%M:%S');
 var numberFormatter = d3.format(",");
 
 var properties = [{
-        code: 'cases',
+        code: 'Confirmed',
         desc: 'Confirmed cases'
     },
-    // {
-    //     code: 'Death',
-    //     desc: 'Death'
-    // },
-    // {
-    //     code: 'Recovered',
-    //     desc: 'Recovered'
-    // }
+    {
+        code: 'Deaths',
+        desc: 'Deaths'
+    },
+    {
+        code: 'Recovered',
+        desc: 'Recovered cases'
+    }
 ];
-var currProperty = 'cases';
-var ProvinceState = 'province';
-var CountryRegion = 'country';
+var currProperty = 'Confirmed';
+var ProvinceState = 'Province';
+var CountryRegion = 'Country';
 
 var theMap = L.map('map', {
     maxZoom: 14
@@ -50,9 +50,9 @@ function renderCircles() {
             });
         c.addTo(theMap);
         if (feature.properties[ProvinceState] !== "") {
-            c.bindTooltip('<h3>' + feature.properties[ProvinceState] + '</h3> - ' + feature.properties[CountryRegion] + '<br><br><b>' + currProperty + ': </b>' + numberFormatter(feature.properties[currProperty]) + '<br>' + '<b>Death: </b>' + numberFormatter(feature.properties.Death) + '<br>' + '<b>Recovered: </b>' + numberFormatter(feature.properties.Recovered));
+            c.bindTooltip('<h3>' + feature.properties[ProvinceState] + '</h3> - ' + feature.properties[CountryRegion] + '<br><br><b>' + currProperty + ': </b>' + numberFormatter(feature.properties[currProperty]) + '<br>' + '<b>Death: </b>' + numberFormatter(feature.properties.Deaths) + '<br>' + '<b>Recovered: </b>' + numberFormatter(feature.properties.Recovered));
         } else {
-            c.bindTooltip('<h3>' + feature.properties[CountryRegion] + '</h3><br><b>' + currProperty + ': </b>' + numberFormatter(feature.properties[currProperty]) + '<br>' + '<b>Death: </b>' + numberFormatter(feature.properties.Death) + '<br>' + '<b>Recovered: </b>' + numberFormatter(feature.properties.Recovered));
+            c.bindTooltip('<h3>' + feature.properties[CountryRegion] + '</h3><br><b>' + currProperty + ': </b>' + numberFormatter(feature.properties[currProperty]) + '<br>' + '<b>Death: </b>' + numberFormatter(feature.properties.Deaths) + '<br>' + '<b>Recovered: </b>' + numberFormatter(feature.properties.Recovered));
         }
         circles.push(c);
     });
