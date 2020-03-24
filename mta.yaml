@@ -39,7 +39,7 @@ modules:
       type: nodejs
       path: gen/srv
       parameters:
-        disk-quota: 256M
+        disk-quota: 512M
         memory: 256M
       provides:
         - name: cap.covid.api
