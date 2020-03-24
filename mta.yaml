@@ -1,4 +1,4 @@
-_schema-version: 3.1
+_schema-version: "3.1"
 ID: cap.covid
 version: 1.0.0
 parameters:
@@ -64,6 +64,4 @@ resources:
         path: ./xs-security.json
         service: xsuaa
         service-plan: application
-        service-keys:
-          -name: cap.covid.xsuaa.key
-      type: com.sap.xs.xsuaa
+      type: org.cloudfoundry.managed-service

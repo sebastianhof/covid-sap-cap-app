@@ -21,9 +21,6 @@
     "deploy-mta": "cf deploy .\\mta_archives\\cap.covid_1.0.0.mtar"
   },
   "cds": {
-    "hana": {
-      "syntax": "hdi"
-    },
     "requires": {
       "db": {
         "kind": "hana",
