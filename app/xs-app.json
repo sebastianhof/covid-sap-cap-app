@@ -1,13 +1,15 @@
 {
     "welcomeFile": "/webapp/",
-    "authenticationMethod": "none",
+    "authenticationMethod": "route",
     "routes": [{
         "source": "^/webapp/(.*)$",
         "target": "$1",
+        "authenticationType": "xsuaa",
         "localDir": "webapp/"
     }, {
         "source": "^(.*)$",
         "target": "$1",
+        "authenticationType": "xsuaa",
         "destination": "cap.covid.api"
     }]
 }

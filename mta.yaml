@@ -15,7 +15,11 @@ modules:
       path: app
       deployed-after:
         - cap.covid.srv
+      parameters:
+        disk-quota: 256M
+        memory: 256M
       requires:
+        - name: cap.covid.xsuaa
         - name: cap.covid.api
           group: destinations
           properties:
@@ -26,23 +30,40 @@ modules:
     - name: cap.covid.db
       type: hdb
       path: gen/db
+      parameters:
+        disk-quota: 256M
+        memory: 256M
       requires:
         - name: cap.covid.hdi
     - name: cap.covid.srv
       type: nodejs
       path: gen/srv
+      parameters:
+        disk-quota: 256M
+        memory: 256M
       provides:
         - name: cap.covid.api
           properties:
             url: ${default-url}
       requires:
         - name: cap.covid.hdi
+        - name: cap.covid.xsuaa
       properties:
         EXIT: 1
 resources:
     - name: cap.covid.hdi
+      parameters:
+        service: hanatrial
+        service-alternatives: ["hana"]
+        service-plan: hdi-shared
       type: com.sap.xs.hdi-container
       properties:
         hdi-container-name: ${service-name}
-      parameters:
-        service: hana
+    - name: cap.covid.xsuaa
+      parameters: 
+        path: ./xs-security.json
+        service: xsuaa
+        service-plan: application
+        service-keys:
+          -name: cap.covid.xsuaa.key
+      type: com.sap.xs.xsuaa
