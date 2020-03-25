@@ -4,7 +4,6 @@ const https = require('https');
 const csvtojson = require('csvtojson');
 const moment = require('moment');
 const crypto = require('crypto');
-const GeoJSON = require('geojson');
 
 
 const PROVINCE_FIELD = 'Province/State';
@@ -101,26 +100,7 @@ module.exports = async (srv) => {
         await INSERT.into(RecoveredCases).entries(recoveredData);
     }
 
-   
-
     srv.on('reset', init);
-
-    srv.on('geojson', async (req, resp) => {        
-        // Some default
-        const currentDate = moment().subtract(1, 'days');
-        const year = req.data.year || currentDate.year();
-        const month = req.data.month || currentDate.month();
-        const day = req.data.day || currentDate.date();
-
-        const requestDate = moment([year, month, day]).format('YYYY-MM-DD');
-
-        var cases = await SELECT.from(AggregatedCovidCases).where({ ReportDate: requestDate });
-
-        var data = GeoJSON.parse(cases, { Point: [ 'Latitude', 'Longitude' ] });
-
-        req.reply(JSON.stringify(data));
-        
-    });
 
     init();
 

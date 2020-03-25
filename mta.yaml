@@ -1,6 +1,7 @@
 _schema-version: "3.1"
 ID: cap.covid
 version: 1.0.0
+description: "A simple CAP project for displaying Covid-19 cases."
 parameters:
   enable-parallel-deployments: true  
 build-parameters:
@@ -9,8 +10,11 @@ build-parameters:
      commands:
       - npm install
       - npx cds build\/all
+
 modules:
+    # ------------- ROUTER MODULE ----------------
     - name: cap.covid.router
+      # ------------------------------------------
       type: approuter.nodejs
       path: app
       deployed-after:
@@ -27,7 +31,9 @@ modules:
             strictSSL: false
             name: cap.covid.api
             url: ~{url}
+    # ------------- DB MODULE ----------------
     - name: cap.covid.db
+      # --------------------------------------
       type: hdb
       path: gen/db
       parameters:
@@ -35,7 +41,9 @@ modules:
         memory: 256M
       requires:
         - name: cap.covid.hdi
+    # ------------- SERVICE MODULE ----------------
     - name: cap.covid.srv
+      # -------------------------------------------
       type: nodejs
       path: gen/srv
       parameters:
@@ -49,19 +57,26 @@ modules:
         - name: cap.covid.hdi
         - name: cap.covid.xsuaa
       properties:
-        EXIT: 1
+        EXIT: 1 # required by deploy.js task to terminate
 resources:
+    # ------------- HDI CONTAINER ----------------
     - name: cap.covid.hdi
+      # ------------------------------------------
+      type: com.sap.xs.hdi-container
       parameters:
         service: hanatrial
         service-alternatives: ["hana"]
         service-plan: hdi-shared
-      type: com.sap.xs.hdi-container
       properties:
         hdi-container-name: ${service-name}
+    # ------------- XSUAA ----------------
     - name: cap.covid.xsuaa
+      # ------------------------------------------
+      type: org.cloudfoundry.managed-service
       parameters: 
         path: ./xs-security.json
         service: xsuaa
         service-plan: application
-      type: org.cloudfoundry.managed-service
+        config:
+          xsappname: CAP-Covid
+          tenant-mode: dedicated

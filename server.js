@@ -1,6 +1,9 @@
 const cds = require('@sap/cds');
 const express = require('express');
 const odatav2proxy = require('@sap/cds-odata-v2-adapter-proxy');
+const moment = require('moment');
+const GeoJSON = require('geojson');
+
 const {index} = require ('@sap/cds/lib/utils/app/index_html')
 
 
@@ -33,6 +36,26 @@ module.exports = async (options) => {
     app.use(odatav2proxy({
         port: PORT
     }));
+
+    app.get('/geojson', async (req, res) => {
+        // TODO: Add authentication
+        var { AggregatedCovidCases } = model.entities('cap.covid');
+
+        // Some default
+        const currentDate = moment().subtract(1, 'days');
+        const year = currentDate.year();
+        const month = currentDate.month();
+        const day = currentDate.date();
+
+        const requestDate = moment([year, month, day]).format('YYYY-MM-DD');
+
+        var cases = await SELECT.from(AggregatedCovidCases).where({ ReportDate: requestDate });
+
+        var data = GeoJSON.parse(cases, { Point: [ 'Latitude', 'Longitude' ] });
+
+        res.send(data);
+
+    });
 
     return app.listen(PORT);
 }

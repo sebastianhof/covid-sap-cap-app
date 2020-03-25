@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "A simple CAP project for displaying Covid-19 cases.",
   "repository": "https://github.com/sebastianhof/covid-sap-cap-app",
-  "license": "ISC",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": "12.14.0"
+  },
   "dependencies": {
     "@sap/cds": "^3",
     "@sap/cds-odata-v2-adapter-proxy": "^1.4.21",
@@ -17,27 +20,28 @@
     "moment": "^2.24.0",
     "passport": "^0.4.1"
   },
+  "devDependencies": {
+    "sqlite3": "^4.1.1"
+  },
   "scripts": {
     "start": "npx cds run",
     "build": "cds build/all && cds deploy",
-    "build-mta": "cds build/all --clean && mbt build -p=cf",
+    "build-mta": "mbt build -p=cf",
     "deploy-mta": "cf deploy .\\mta_archives\\cap.covid_1.0.0.mtar"
   },
   "cds": {
     "requires": {
       "db": {
-        "kind": "hana",
-        "model": [
-          "db",
-          "srv"
-        ]
+        "kind": "hana"
+      },
+      "uaa": {
+        "kind": "xsuaa"
+      }
+    },
+    "[production]": {
+      "hana": {
+        "syntax": "hdi"
       }
     }
-  },
-  "devDependencies": {
-    "sqlite3": "^4.1.1"
-  },
-  "engines": {
-    "node": "12.14.0"
   }
 }

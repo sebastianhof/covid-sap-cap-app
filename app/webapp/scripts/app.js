@@ -59,19 +59,13 @@ function renderCircles() {
 }
 
 function fetchData(dateStr) {
-    var url = '../covid/geojson';
-    d3.json(url, {
-        method: 'POST',
-        headers: {
-            "Content-type": "application/json; charset=UTF-8"
-          }
-        // TODO: Provide parameters for date selection
-    }).then(function (response) {
+    var url = '../geojson';
+    d3.json(url).then(function (response) {
 
-        if (response == null || response.value == null)
+        if (response == null)
             return;
 
-        theData = JSON.parse(response.value);
+        theData = response;
         renderCircles();
     });
 }
