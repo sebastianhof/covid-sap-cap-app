@@ -32,7 +32,7 @@
   "cds": {
     "requires": {
       "db": {
-        "kind": "hana"
+        "kind": "sqlite"
       },
       "uaa": {
         "kind": "xsuaa"

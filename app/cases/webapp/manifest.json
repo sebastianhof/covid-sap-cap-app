@@ -1,7 +1,7 @@
 {
     "_version": "1.15.0",
     "sap.app": {
-        "id": "cap.covid.ui.app",
+        "id": "cap.covid.ui.cases",
         "type": "application",
         "i18n": "i18n/i18n.properties",
         "applicationVersion": {
@@ -15,18 +15,7 @@
                 "uri": "/covid/",
                 "type": "OData",
                 "settings": {
-                    "annotations": [
-                        "annotation0"
-                    ],
-                    "odataVersion": "4.0",
-                    "localUri": "localService/metadata.xml"
-                }
-            },
-            "annotation0": {
-                "type": "ODataAnnotation",
-                "uri": "annotations/annotation0.xml",
-                "settings": {
-                    "localUri": "annotations/annotation0.xml"
+                    "odataVersion": "4.0"
                 }
             }
         },
@@ -59,7 +48,7 @@
             "css": []
         },
         "dependencies": {
-            "minUI5Version": "1.65.0",
+            "minUI5Version": "",
             "libs": {
                 "sap.fe": {},
                 "sap.ui.fl": {}
