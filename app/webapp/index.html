@@ -1,49 +1,41 @@
-<!-- Attribution: 
-    Tracking Coronavirus COVID-19 Near Real Time with SAP HANA XSA | SAP Blogs https://blogs.sap.com/2020/03/05/tracking-coronavirus-covid-19-near-real-time-with-sap-hana-xsa/?source=social-global-voicestorm-LinkedIn&campaigncode=CRM-YA19-SSO-GETSOC1 by Ferry Djaja
-    VID-19 (2019-nCoV) href="https://github.com/CSSEGISandData/COVID-19" by JHU CSSE
-    Map tiles by Stamen Design under CC BY 3.0 
-    Map data by OpenStreetMap under ODbL
--->
-
 <!DOCTYPE html>
 <html>
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{{appTitle}}</title>
 
-<head>
+        <script>
+            window["sap-ushell-config"] = {
+                defaultRenderer: "fiori2",
+                applications: {
+                    "fe-lrop-v4": {
+                        title: "Covid Browser",
+                        description: "A Fiori elements application to look up Covid-19 cases",
+                        additionalInformation: "SAPUI5.Component=cap.covid.ui.app",
+                        applicationType: "URL",
+                        url: "./",
+                        navigationMode: "embedded"
+                    }
+                }
+            };
+        </script>
 
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-    <title>COVID-19 on SAP CAP</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-
-    <link rel="stylesheet" href="./styles/app.css" />
-
-
-</head>
-
-<body class="sapUiBody" id="content">
-
-    <div class="header">
-        <h2>COVID-19 (2019-nCoV)</h2>
-    </div>
-    <div class="container">
-        <div id="map"></div>
-    </div>
-
-    <!-- leaflet -->
-    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
-
-    <!-- D3 -->
-    <script src="https://d3js.org/d3.v5.min.js"></script>
-
-    <!-- jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
-    <!-- Custom script -->
-    <script src="./scripts/app.js"></script> 
-</body> 
-
+        <script src="https://sapui5.hana.ondemand.com/test-resources/sap/ushell/bootstrap/sandbox.js"></script>
+        <script
+            src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js"
+            data-sap-ui-libs="sap.m, sap.ushell, sap.ui.core, sap.f, sap.fe, sap.ui.table, sap.ui.layout"
+            data-sap-ui-compatVersion="edge"
+            data-sap-ui-theme="sap_fiori_3"
+            data-sap-ui-frameOptions="allow"
+            data-sap-ui-bindingSyntax="complex"
+        ></script>
+        <script>
+            sap.ui.getCore().attachInit(function() {
+                sap.ushell.Container.createRenderer().placeAt('content');
+            });
+        </script>
+    </head>
+    <body class="sapUiBody" id="content"></body>
 </html>

@@ -1,0 +1,24 @@
+{
+    "$schema": "./.schemas/App.json",
+    "id": "cap.covid.ui.app",
+    "pages": {
+        "AggregatedCovidCasesList": {
+            "pageType": "ListReport",
+            "entitySet": "AggregatedCovidCases",
+            "variantManagement": "Page",
+            "navigation": {
+                "AggregatedCovidCasesObjectPage": "AggregatedCovidCases"
+            }
+        },
+        "AggregatedCovidCasesObjectPage": {
+            "pageType": "ObjectPage",
+            "entitySet": "AggregatedCovidCases",
+            "navigation": {}
+        }
+    },
+    "home": "AggregatedCovidCasesList",
+    "target": {
+        "fioriElements": "v4",
+        "odata": "v4"
+    }
+}

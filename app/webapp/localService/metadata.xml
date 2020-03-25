@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+        <edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema Namespace="CovidService" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+            <EntityContainer Name="EntityContainer">
+                <EntitySet Name="AggregatedCovidCases" EntityType="CovidService.AggregatedCovidCases"/>
+                <EntitySet Name="ConfirmedCases" EntityType="CovidService.ConfirmedCases"/>
+                <EntitySet Name="DeathCases" EntityType="CovidService.DeathCases"/>
+                <EntitySet Name="RecoveredCases" EntityType="CovidService.RecoveredCases"/>
+                <ActionImport Name="reset" Action="CovidService.reset"/>
+            </EntityContainer>
+            <EntityType Name="AggregatedCovidCases">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.String" Nullable="false"/>
+                <Property Name="Recovered" Type="Edm.Int32"/>
+                <Property Name="Deaths" Type="Edm.Int32"/>
+                <Property Name="Province" Type="Edm.String"/>
+                <Property Name="Country" Type="Edm.String"/>
+                <Property Name="ReportDate" Type="Edm.Date"/>
+                <Property Name="Latitude" Type="Edm.Double"/>
+                <Property Name="Longitude" Type="Edm.Double"/>
+                <Property Name="Confirmed" Type="Edm.Int32"/>
+            </EntityType>
+            <EntityType Name="ConfirmedCases">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.String" Nullable="false"/>
+                <Property Name="province" Type="Edm.String"/>
+                <Property Name="country" Type="Edm.String"/>
+                <Property Name="latitude" Type="Edm.Double"/>
+                <Property Name="longitude" Type="Edm.Double"/>
+                <Property Name="cases" Type="Edm.Int32"/>
+                <Property Name="date" Type="Edm.Date"/>
+            </EntityType>
+            <EntityType Name="DeathCases">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.String" Nullable="false"/>
+                <Property Name="province" Type="Edm.String"/>
+                <Property Name="country" Type="Edm.String"/>
+                <Property Name="latitude" Type="Edm.Double"/>
+                <Property Name="longitude" Type="Edm.Double"/>
+                <Property Name="cases" Type="Edm.Int32"/>
+                <Property Name="date" Type="Edm.Date"/>
+            </EntityType>
+            <EntityType Name="RecoveredCases">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.String" Nullable="false"/>
+                <Property Name="province" Type="Edm.String"/>
+                <Property Name="country" Type="Edm.String"/>
+                <Property Name="latitude" Type="Edm.Double"/>
+                <Property Name="longitude" Type="Edm.Double"/>
+                <Property Name="cases" Type="Edm.Int32"/>
+                <Property Name="date" Type="Edm.Date"/>
+            </EntityType>
+            <Action Name="reset" IsBound="false"/>
+            <Annotations Target="CovidService.AggregatedCovidCases">
+                <Annotation Term="UI.HeaderInfo">
+                    <Record Type="UI.HeaderInfoType">
+                        <PropertyValue Property="Description">
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="cases"/>
+                            </Record>
+                        </PropertyValue>
+                        <PropertyValue Property="TypeName" String="ConfirmedCases"/>
+                        <PropertyValue Property="TypeNamePlural" String="Cases"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Country"/>
+                            <PropertyValue Property="Label" String="Country"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Province"/>
+                            <PropertyValue Property="Label" String="Province/State"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="ReportDate"/>
+                            <PropertyValue Property="Label" String="Report Date"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Confirmed"/>
+                            <PropertyValue Property="Label" String="Confirmed Cases"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Recovered"/>
+                            <PropertyValue Property="Label" String="Recovered Cases"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Deaths"/>
+                            <PropertyValue Property="Label" String="Deaths Cases"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="position" Int="20"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.SelectionFields">
+                    <Collection>
+                        <PropertyPath>Country</PropertyPath>
+                        <PropertyPath>ReportDate</PropertyPath>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.chart">
+                    <Collection>
+                        <Record>
+                            <PropertyValue Property="title" String="Corona Cases per Country"/>
+                        </Record>
+                        <Record>
+                            <PropertyValue Property="description" String="Line-chart displaying the Cases as per Country"/>
+                        </Record>
+                        <Record>
+                            <PropertyValue Property="chartType" EnumMember="UI.chartType/BAR"/>
+                        </Record>
+                        <Record>
+                            <PropertyValue Property="dimensions">
+                                <Collection>
+                                    <String>Country</String>
+                                </Collection>
+                            </PropertyValue>
+                        </Record>
+                        <Record>
+                            <PropertyValue Property="measures">
+                                <Collection>
+                                    <String>Confirmed</String>
+                                    <String>Recovered</String>
+                                    <String>Deaths</String>
+                                </Collection>
+                            </PropertyValue>
+                        </Record>
+                        <Record>
+                            <PropertyValue Property="dimensionAttributes">
+                                <Collection>
+                                    <Record>
+                                        <PropertyValue Property="dimension" String="Country"/>
+                                        <PropertyValue Property="role" EnumMember="UI.chartType/CATALOG"/>
+                                    </Record>
+                                </Collection>
+                            </PropertyValue>
+                            <PropertyValue Property="measureAttributes">
+                                <Collection>
+                                    <Record>
+                                        <PropertyValue Property="measure" String="Confirmed"/>
+                                        <PropertyValue Property="role" EnumMember="UI.chartType/CATALOG"/>
+                                    </Record>
+                                </Collection>
+                            </PropertyValue>
+                        </Record>
+                        <Record>
+                            <PropertyValue Property="qualifier" String="CoronaCasesQualifier"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="CovidService.AggregatedCovidCases/Country">
+                <Annotation Term="Common.Label" String="Country"/>
+            </Annotations>
+            <Annotations Target="CovidService.AggregatedCovidCases/ReportDate">
+                <Annotation Term="Common.Label" String="Date"/>
+            </Annotations>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

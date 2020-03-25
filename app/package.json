@@ -1,16 +1,41 @@
 {
-  "name": "cap.covid.router",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "dependencies": {
-    "@sap/approuter": "^6.8.2"
-  },
-  "devDependencies": {},
-  "scripts": {
-    "start": "node node_modules/@sap/approuter/approuter.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC"
+	"name": "app",
+	"version": "0.0.1",
+	"private": true,
+	"sapux": true,
+	"description": "A Fiori elements application to look up Covid-19 cases",
+	"keywords": [
+		"ui5",
+		"openui5",
+		"sapui5"
+	],
+	"main": "webapp/index.html",
+	"scripts": {
+		"start": "node node_modules/@sap/approuter/approuter.js",
+		"start-live": "npm run start-live-v4",
+		"start-live-v4": "node node_modules/@ui5/cli/bin/ui5 serve --open index.html",
+		"start-l": "npm run build && npm run start-live",
+		"build": "rimraf dist && ui5 build -a --include-task=generateManifestBundle generateCachebusterInfo"
+	},
+	"remarkConfig": {
+		"plugins": [
+			"remark-preset-lint-consistent"
+		]
+	},
+	"devDependencies": {
+		"rimraf": "3.0.0",
+		"@ui5/logger": "^1.0.1",
+		"@ui5/cli": "1.13.0"
+	},
+	"optionalDependencies": {
+		"fsevents": "1.2.9"
+	},
+	"ui5": {
+		"dependencies": [
+			"@sap-ux/ui5-tooling"
+		]
+	},
+	"dependencies": {
+		"@sap/approuter": "6.8.2"
+	}
 }

@@ -1,0 +1,1052 @@
+{
+    "type": "object",
+    "properties": {
+        "_version": {
+            "description": "Represents attributes format version. It is managed by namespace owner",
+            "enum": [
+                "1.1.0",
+                "1.2.0",
+                "1.3.0"
+            ],
+            "type": "string"
+        },
+        "globalFilterModel": {
+            "description": "Represents the name of global filter OData model, which  contains entities definition that are relevant for global filters",
+            "type": "string"
+        },
+        "globalFilterEntityType": {
+            "description": "Represents the entity to use as global filter in the smart filter bar control",
+            "type": "string"
+        },
+        "globalFilterEntitySet": {
+            "description": "Represents the entity set to use as global filter in the smart filter bar control",
+            "type": "string"
+        },
+        "showBasicSearch": {
+            "description": "Represents a switch to include basic search in the global filters",
+            "type": "boolean"
+        },
+        "disableErrorPage": {
+            "description": "Represents a switch to disable the error page shown on load of overview page when no data is retreived from the backend",
+            "type": "boolean"
+        },
+        "smartVariantRequired": {
+            "description": "Represents a switch to activate smart variant management in the global filters",
+            "type": "boolean"
+        },
+        "bHeaderExpanded": {
+            "description": "Represents a switch to show smart filter bar in expanded or collapsed mode",
+            "type": "boolean"
+        },
+        "containerLayout": {
+            "description": "Represents the layout of the card container",
+            "enum": [
+                "fixed",
+                "resizable"
+            ],
+            "type": "string"
+        },
+        "showDateInRelativeFormat": {
+            "description": "Represents a switch to Enable or disable Relative or Normal date formating in ovp application",
+            "type": "boolean"
+        },
+        "disableTableCardFlexibility": {
+            "description": "Represents a switch to Enable or Disable the Flexibility of Table cards",
+            "type": "boolean"
+        },
+        "enableLiveFilter": {
+            "description": "Represents the switch to activate live update in the global filters, else manual update will be required",
+            "type": "boolean"
+        },
+        "considerAnalyticalParameters": {
+            "description": "Flag to enable/disable analytical parameter support for Smart filter bar",
+            "type": "boolean"
+        },
+        "refreshIntervalInMinutes": {
+            "description": "Time interval in minutes to auto refresh the card models",
+            "type": "number"
+        },
+        "useDateRangeType": {
+            "description": "Flag to enable/disable semantic date range control for Smart filter bar",
+            "type": "boolean"
+        },
+        "cards": {
+            "type": "object",
+            "additionalProperties": {
+                "$ref": "#/definitions/Card"
+            }
+        },
+        "resizableLayout": {
+            "type": "object",
+            "additionalProperties": {
+                "$ref": "#/definitions/ResizableLayoutVariant"
+            }
+        },
+        "$schema": {
+            "type": "string"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "cards"
+    ],
+    "definitions": {
+        "Pages": {
+            "type": "object",
+            "additionalProperties": {
+                "$ref": "#/definitions/Page"
+            }
+        },
+        "Page": {
+            "type": "object",
+            "properties": {
+                "pageType": {
+                    "$ref": "#/definitions/PageType"
+                },
+                "entitySet": {
+                    "type": "string"
+                },
+                "navigationProperty": {
+                    "type": "string"
+                },
+                "config": {
+                    "$ref": "#/definitions/PageConfig"
+                },
+                "navigation": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "view": {
+                    "$ref": "#/definitions/PageView"
+                },
+                "variantManagement": {
+                    "type": "string"
+                }
+            },
+            "additionalProperties": false,
+            "required": [
+                "pageType"
+            ]
+        },
+        "PageType": {
+            "enum": [
+                "CustomPage",
+                "ListReport",
+                "ObjectPage",
+                "OverviewPage"
+            ],
+            "type": "string"
+        },
+        "PageConfig": {
+            "type": "object",
+            "properties": {
+                "$schema": {
+                    "type": "string"
+                }
+            },
+            "additionalProperties": false
+        },
+        "PageView": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "viewLevel": {
+                    "type": "number"
+                },
+                "title": {
+                    "type": "string"
+                }
+            },
+            "additionalProperties": false,
+            "required": [
+                "id",
+                "name"
+            ]
+        },
+        "Target": {
+            "type": "object",
+            "properties": {
+                "fioriElements": {
+                    "$ref": "#/definitions/FioriElementsVersion"
+                },
+                "odata": {
+                    "$ref": "#/definitions/OdataVersion"
+                }
+            },
+            "additionalProperties": false,
+            "required": [
+                "fioriElements",
+                "odata"
+            ]
+        },
+        "FioriElementsVersion": {
+            "enum": [
+                "v2",
+                "v4"
+            ],
+            "type": "string"
+        },
+        "OdataVersion": {
+            "enum": [
+                "v2",
+                "v4"
+            ],
+            "type": "string"
+        },
+        "AppSettings": {
+            "type": "object",
+            "properties": {
+                "forceGlobalRefresh": {
+                    "type": "boolean"
+                },
+                "objectPageHeaderType": {
+                    "type": "string",
+                    "enum": [
+                        "Dynamic"
+                    ]
+                },
+                "showDraftToggle": {
+                    "type": "boolean"
+                },
+                "flexibleColumnLayout": {
+                    "type": "boolean"
+                }
+            },
+            "additionalProperties": false
+        },
+        "Table<GenericColumns,GenericActions>": {
+            "type": "object",
+            "properties": {
+                "showTablePersonalisation": {
+                    "description": "The showTablePersonalisation attribute can be set to false for hiding the TablePersonalisation button.",
+                    "type": "boolean"
+                },
+                "useExportToExcel": {
+                    "description": "Display the Export to Excel button in table toolbar",
+                    "type": "boolean"
+                },
+                "mode": {
+                    "$ref": "#/definitions/TableMode"
+                },
+                "gridTable": {
+                    "type": "boolean"
+                },
+                "multiSelect": {
+                    "type": "boolean"
+                },
+                "fixedLayout": {
+                    "type": "boolean"
+                },
+                "enableAutoBinding": {
+                    "type": "boolean"
+                },
+                "condensedTableLayout": {
+                    "type": "boolean"
+                },
+                "enableTableFilterInPageVariant": {
+                    "description": "If you have enabled harmonized variant management, by default, you cannot set a filter in the table personalization settings.\nTo enable filtering, set the enableTableFilterInPageVariant property in the manifest.",
+                    "type": "boolean"
+                },
+                "columns": {
+                    "$ref": "#/definitions/GenericColumns"
+                },
+                "actions": {
+                    "$ref": "#/definitions/GenericActions"
+                }
+            },
+            "additionalProperties": false
+        },
+        "TableMode": {
+            "enum": [
+                "Delete",
+                "MultiSelect",
+                "None",
+                "SingleSelect",
+                "SingleSelectLeft",
+                "SingleSelectMaster"
+            ],
+            "type": "string"
+        },
+        "GenericColumns": {
+            "type": "object",
+            "additionalProperties": {
+                "$ref": "#/definitions/TableColumn"
+            }
+        },
+        "TableColumn": {
+            "type": "object",
+            "properties": {
+                "width": {
+                    "type": "string"
+                },
+                "hAlign": {
+                    "$ref": "#/definitions/HAlign"
+                }
+            },
+            "additionalProperties": false
+        },
+        "HAlign": {
+            "enum": [
+                "Begin",
+                "Center",
+                "End",
+                "Initial",
+                "Left",
+                "Right"
+            ],
+            "type": "string"
+        },
+        "GenericActions": {
+            "type": "object",
+            "additionalProperties": {
+                "$ref": "#/definitions/Action"
+            },
+            "properties": {
+                "addEntry": {
+                    "$ref": "#/definitions/Action"
+                },
+                "deleteEntry": {
+                    "$ref": "#/definitions/Action"
+                }
+            }
+        },
+        "Action": {
+            "type": "object",
+            "properties": {
+                "visible": {
+                    "type": "boolean"
+                }
+            },
+            "additionalProperties": false,
+            "required": [
+                "visible"
+            ]
+        },
+        "FilterBar": {
+            "type": "object",
+            "properties": {
+                "smartVariantManagement": {
+                    "type": "boolean"
+                },
+                "liveMode": {
+                    "type": "boolean"
+                }
+            },
+            "additionalProperties": false
+        },
+        "Table<LineItems,GenericActions>": {
+            "type": "object",
+            "properties": {
+                "showTablePersonalisation": {
+                    "description": "The showTablePersonalisation attribute can be set to false for hiding the TablePersonalisation button.",
+                    "type": "boolean"
+                },
+                "useExportToExcel": {
+                    "description": "Display the Export to Excel button in table toolbar",
+                    "type": "boolean"
+                },
+                "mode": {
+                    "$ref": "#/definitions/TableMode"
+                },
+                "gridTable": {
+                    "type": "boolean"
+                },
+                "multiSelect": {
+                    "type": "boolean"
+                },
+                "fixedLayout": {
+                    "type": "boolean"
+                },
+                "enableAutoBinding": {
+                    "type": "boolean"
+                },
+                "condensedTableLayout": {
+                    "type": "boolean"
+                },
+                "enableTableFilterInPageVariant": {
+                    "description": "If you have enabled harmonized variant management, by default, you cannot set a filter in the table personalization settings.\nTo enable filtering, set the enableTableFilterInPageVariant property in the manifest.",
+                    "type": "boolean"
+                },
+                "columns": {
+                    "$ref": "#/definitions/LineItems"
+                },
+                "actions": {
+                    "$ref": "#/definitions/GenericActions"
+                }
+            },
+            "additionalProperties": false
+        },
+        "LineItems": {
+            "type": "object",
+            "properties": {
+                "Country": {
+                    "$ref": "#/definitions/TableColumn"
+                },
+                "Province": {
+                    "$ref": "#/definitions/TableColumn"
+                },
+                "ReportDate": {
+                    "$ref": "#/definitions/TableColumn"
+                },
+                "Confirmed": {
+                    "$ref": "#/definitions/TableColumn"
+                },
+                "Recovered": {
+                    "$ref": "#/definitions/TableColumn"
+                },
+                "Deaths": {
+                    "$ref": "#/definitions/TableColumn"
+                }
+            },
+            "additionalProperties": false
+        },
+        "ObjectHeader": {
+            "type": "object",
+            "properties": {
+                "editable": {
+                    "type": "boolean"
+                }
+            },
+            "additionalProperties": false,
+            "required": [
+                "editable"
+            ]
+        },
+        "Card": {
+            "description": "Represents the card attributes\n\nThis interface was referenced by `undefined`'s JSON-Schema definition\nvia the `patternProperty` \"^[a-zA-Z0-9_\\.\\-]+$\".",
+            "type": "object",
+            "properties": {
+                "sequencePos": {
+                    "description": "Represents the position of the card in the sequence",
+                    "type": "number"
+                },
+                "model": {
+                    "description": "Represents the model for the card",
+                    "type": "string"
+                },
+                "template": {
+                    "description": "Represents the card component path to use for this card",
+                    "type": "string"
+                },
+                "settings": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/definitions/AnalyticalCardSettings"
+                        },
+                        {
+                            "$ref": "#/definitions/ListCardSettings"
+                        },
+                        {
+                            "$ref": "#/definitions/StackCardSettings"
+                        },
+                        {
+                            "$ref": "#/definitions/TableCardSettings"
+                        },
+                        {
+                            "$ref": "#/definitions/LinkListCardSettings"
+                        }
+                    ]
+                },
+                "tabs": {
+                    "description": "Represents the card with view switch control",
+                    "type": "array",
+                    "items": [
+                        {
+                            "$ref": "#/definitions/TabSetting"
+                        }
+                    ],
+                    "minItems": 1,
+                    "additionalItems": {
+                        "$ref": "#/definitions/TabSetting"
+                    }
+                }
+            },
+            "additionalProperties": false,
+            "required": [
+                "template"
+            ]
+        },
+        "AnalyticalCardSettings": {
+            "description": "Represents the card specific properties - properties that are passed to the card",
+            "type": "object",
+            "properties": {
+                "entitySet": {
+                    "description": "Represents the entity set that will be displayed in this card",
+                    "type": "string"
+                },
+                "title": {
+                    "description": "Represents language-dependent title of the card - used in the card header",
+                    "type": "string"
+                },
+                "subTitle": {
+                    "description": "Represents language-dependent subtitle of the card - used in the card header",
+                    "type": "string"
+                },
+                "category": {
+                    "description": "Represents the category of the card- used in the card header",
+                    "type": "string"
+                },
+                "identificationAnnotationPath": {
+                    "description": "Represents the identification annotation path",
+                    "type": "string"
+                },
+                "selectionAnnotationPath": {
+                    "description": "Represents the selection annotation path",
+                    "type": "string"
+                },
+                "presentationAnnotationPath": {
+                    "description": "Represents the presentation annotation path",
+                    "type": "string"
+                },
+                "chartAnnotationPath": {
+                    "description": "Represents the chart annotation path",
+                    "type": "string"
+                },
+                "dataPointAnnotationPath": {
+                    "description": "Represents the data point annotation path",
+                    "type": "string"
+                },
+                "defaultSpan": {
+                    "description": "Represents the card default grid size in columns and rows",
+                    "anyOf": [
+                        {
+                            "type": "object",
+                            "properties": {
+                                "cols": {
+                                    "description": "Represents the number of the number of grid columns",
+                                    "type": "number"
+                                },
+                                "rows": {
+                                    "description": "Represents the number of the number of grid rows",
+                                    "type": "number"
+                                },
+                                "showOnlyHeader": {
+                                    "description": "Represents if user wants to show only header part of card in resizable layout",
+                                    "type": "boolean"
+                                },
+                                "minimumTitleRow": {
+                                    "description": "If user wants to show more text in title then he/she can configure no of lines to be shown in title(Maximum allowed 3 lines)",
+                                    "type": "number"
+                                },
+                                "minimumSubTitleRow": {
+                                    "description": "If user wants to show more text in title then he/she can configure no of lines to be shown in sub-title(Maximum allowed 2 lines)",
+                                    "type": "number"
+                                }
+                            },
+                            "additionalProperties": false,
+                            "required": [
+                                "cols",
+                                "rows"
+                            ]
+                        },
+                        {
+                            "enum": [
+                                "auto"
+                            ],
+                            "type": "string"
+                        }
+                    ]
+                }
+            },
+            "additionalProperties": false,
+            "required": [
+                "title"
+            ]
+        },
+        "ListCardSettings": {
+            "type": "object",
+            "properties": {
+                "entitySet": {
+                    "description": "Represents the entity set that will be displayed in this card",
+                    "type": "string"
+                },
+                "title": {
+                    "description": "Represents language-dependent title of the card - used in the card header",
+                    "type": "string"
+                },
+                "subTitle": {
+                    "description": "Represents language-dependent subtitle of the card - used in the card header",
+                    "type": "string"
+                },
+                "category": {
+                    "description": "Represents the category of the card- used in the card header",
+                    "type": "string"
+                },
+                "listFlavor": {
+                    "description": "Represents the flavor of the list to use in this card. The flavor can be bar chart, carousel or standard",
+                    "enum": [
+                        "bar",
+                        "carousel",
+                        "standard"
+                    ],
+                    "type": "string"
+                },
+                "listType": {
+                    "description": "Represents the type of list to use for this card. The list can be extended to display more information or condensed to take up less space on the card",
+                    "enum": [
+                        "condensed",
+                        "extended"
+                    ],
+                    "type": "string"
+                },
+                "annotationPath": {
+                    "description": "Represents the annotation path",
+                    "type": "string"
+                },
+                "identificationAnnotationPath": {
+                    "description": "Represents the identification annotation path",
+                    "type": "string"
+                },
+                "selectionAnnotationPath": {
+                    "description": "Represents the selection annotation path",
+                    "type": "string"
+                },
+                "presentationAnnotationPath": {
+                    "description": "Represents the presentation annotation path",
+                    "type": "string"
+                },
+                "addODataSelect": {
+                    "description": "This property doesn't exist in the app descriptor json schema, but is there in the reference application for OVP",
+                    "type": "boolean"
+                },
+                "tabs": {
+                    "description": "Represents the card with view switch control\nThis property doesn't exist in the app descriptor json schema for settings, but is there on card level next to template\nHowever, in reference application it is there in settings of a sap.ovp.cards.list",
+                    "type": "array",
+                    "items": [
+                        {
+                            "$ref": "#/definitions/TabSetting"
+                        }
+                    ],
+                    "minItems": 1,
+                    "additionalItems": {
+                        "$ref": "#/definitions/TabSetting"
+                    }
+                }
+            },
+            "additionalProperties": false,
+            "required": [
+                "title"
+            ]
+        },
+        "TabSetting": {
+            "description": "Represents the tab specific properties - properties that are passed to a particular tab in a card",
+            "type": "object",
+            "additionalProperties": {},
+            "properties": {
+                "annotationPath": {
+                    "description": "Represents the annotation path",
+                    "type": "string"
+                },
+                "selectionAnnotationPath": {
+                    "description": "Represents the selection annotation path",
+                    "type": "string"
+                },
+                "chartAnnotationPath": {
+                    "description": "Represents the chart annotation path",
+                    "type": "string"
+                },
+                "presentationAnnotationPath": {
+                    "description": "Represents the presentation annotation path",
+                    "type": "string"
+                },
+                "dataPointAnnotationPath": {
+                    "description": "Represents the data point annotation path",
+                    "type": "string"
+                },
+                "identificationAnnotationPath": {
+                    "description": "Represents the identification annotation path",
+                    "type": "string"
+                },
+                "dynamicSubtitleAnnotationPath": {
+                    "description": "Represents the dynamic subtitle annotation path",
+                    "type": "string"
+                },
+                "value": {
+                    "description": "Represents the drop down value to be shown",
+                    "type": "string"
+                },
+                "chartProperties": {
+                    "description": "This property is responsible for setting specific chart settings",
+                    "type": "object",
+                    "properties": {
+                        "plotArea": {
+                            "$ref": "#/definitions/PlotAreaDef"
+                        },
+                        "timeAxis": {
+                            "$ref": "#/definitions/TimeAxisDef"
+                        }
+                    },
+                    "additionalProperties": false
+                },
+                "colorPalette": {
+                    "description": "Represents the configuration to customize the column stacked chart",
+                    "anyOf": [
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "additionalProperties": {}
+                            }
+                        },
+                        {
+                            "type": "object",
+                            "additionalProperties": {}
+                        }
+                    ]
+                }
+            }
+        },
+        "PlotAreaDef": {
+            "description": "Plot area is a parent property which defines multiple other properties for smoothness and marker size",
+            "type": "object",
+            "properties": {
+                "isSmoothed": {
+                    "description": "Represents whether smoother curves are required or not",
+                    "type": "boolean"
+                },
+                "markerSize": {
+                    "description": "Represents the size of the markers in scatter plots",
+                    "type": "number"
+                },
+                "dataLabel": {
+                    "description": "dataLabel is a parent property that defines other properties for type",
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "description": "Defines whether to display percentage values or actual counts in the donut chart",
+                            "enum": [
+                                "percentage",
+                                "value"
+                            ],
+                            "type": "string"
+                        }
+                    },
+                    "additionalProperties": false
+                }
+            },
+            "additionalProperties": false
+        },
+        "TimeAxisDef": {
+            "description": "Represents the configuration to customize the time axis",
+            "type": "object",
+            "additionalProperties": {},
+            "properties": {
+                "levels": {
+                    "description": "Plot area is a parent property which defines multiple other properties for smoothness and marker size",
+                    "type": "array",
+                    "items": {}
+                }
+            }
+        },
+        "StackCardSettings": {
+            "type": "object",
+            "properties": {
+                "entitySet": {
+                    "description": "Represents the entity set that will be displayed in this card",
+                    "type": "string"
+                },
+                "title": {
+                    "description": "Represents language-dependent title of the card - used in the card header",
+                    "type": "string"
+                },
+                "subTitle": {
+                    "description": "Represents language-dependent subtitle of the card - used in the card header",
+                    "type": "string"
+                },
+                "category": {
+                    "description": "Represents the category of the card- used in the card header",
+                    "type": "string"
+                },
+                "listFlavor": {
+                    "description": "Represents the flavor of the list to use in this card. The flavor can be bar chart, carousel or standard",
+                    "enum": [
+                        "bar",
+                        "carousel",
+                        "standard"
+                    ],
+                    "type": "string"
+                },
+                "listType": {
+                    "description": "Represents the type of list to use for this card. The list can be extended to display more information or condensed to take up less space on the card",
+                    "enum": [
+                        "condensed",
+                        "extended"
+                    ],
+                    "type": "string"
+                },
+                "presentationAnnotationPath": {
+                    "description": "Represents the presentation annotation path",
+                    "type": "string"
+                },
+                "selectionAnnotationPath": {
+                    "description": "Represents the selection annotation path",
+                    "type": "string"
+                },
+                "identificationAnnotationPath": {
+                    "description": "Represents the identification annotation path",
+                    "type": "string"
+                }
+            },
+            "additionalProperties": false,
+            "required": [
+                "title"
+            ]
+        },
+        "TableCardSettings": {
+            "type": "object",
+            "properties": {
+                "entitySet": {
+                    "description": "Represents the entity set that will be displayed in this card",
+                    "type": "string"
+                },
+                "title": {
+                    "description": "Represents language-dependent title of the card - used in the card header",
+                    "type": "string"
+                },
+                "subTitle": {
+                    "description": "Represents language-dependent subtitle of the card - used in the card header",
+                    "type": "string"
+                },
+                "category": {
+                    "description": "Represents the category of the card- used in the card header",
+                    "type": "string"
+                },
+                "listFlavor": {
+                    "description": "Represents the flavor of the list to use in this card. The flavor can be bar chart, carousel or standard",
+                    "enum": [
+                        "bar",
+                        "carousel",
+                        "standard"
+                    ],
+                    "type": "string"
+                },
+                "listType": {
+                    "description": "Represents the type of list to use for this card. The list can be extended to display more information or condensed to take up less space on the card",
+                    "enum": [
+                        "condensed",
+                        "extended"
+                    ],
+                    "type": "string"
+                },
+                "identificationAnnotationPath": {
+                    "description": "Represents the identification annotation path",
+                    "type": "string"
+                },
+                "presentationAnnotationPath": {
+                    "description": "Represents the presentation annotation path",
+                    "type": "string"
+                },
+                "selectionPresentationAnnotationPath": {
+                    "description": "Represents the selection presentation annotation path",
+                    "type": "string"
+                },
+                "selectionAnnotationPath": {
+                    "description": "Represents the selection annotation path",
+                    "type": "string"
+                },
+                "defaultSpan": {
+                    "description": "Represents the card default grid size in columns and rows",
+                    "anyOf": [
+                        {
+                            "type": "object",
+                            "properties": {
+                                "cols": {
+                                    "description": "Represents the number of the number of grid columns",
+                                    "type": "number"
+                                },
+                                "rows": {
+                                    "description": "Represents the number of the number of grid rows",
+                                    "type": "number"
+                                },
+                                "showOnlyHeader": {
+                                    "description": "Represents if user wants to show only header part of card in resizable layout",
+                                    "type": "boolean"
+                                },
+                                "minimumTitleRow": {
+                                    "description": "If user wants to show more text in title then he/she can configure no of lines to be shown in title(Maximum allowed 3 lines)",
+                                    "type": "number"
+                                },
+                                "minimumSubTitleRow": {
+                                    "description": "If user wants to show more text in title then he/she can configure no of lines to be shown in sub-title(Maximum allowed 2 lines)",
+                                    "type": "number"
+                                }
+                            },
+                            "additionalProperties": false,
+                            "required": [
+                                "cols",
+                                "rows"
+                            ]
+                        },
+                        {
+                            "enum": [
+                                "auto"
+                            ],
+                            "type": "string"
+                        }
+                    ]
+                }
+            },
+            "additionalProperties": false,
+            "required": [
+                "title"
+            ]
+        },
+        "LinkListCardSettings": {
+            "type": "object",
+            "properties": {
+                "entitySet": {
+                    "description": "Represents the entity set that will be displayed in this card",
+                    "type": "string"
+                },
+                "title": {
+                    "description": "Represents language-dependent title of the card - used in the card header",
+                    "type": "string"
+                },
+                "listFlavor": {
+                    "description": "Represents the flavor of the list to use in this card. The flavor can be bar chart, carousel or standard",
+                    "enum": [
+                        "bar",
+                        "carousel",
+                        "standard"
+                    ],
+                    "type": "string"
+                },
+                "presentationAnnotationPath": {
+                    "description": "Represents the presentation annotation path",
+                    "type": "string"
+                },
+                "defaultSpan": {
+                    "description": "Represents the card default grid size in columns and rows",
+                    "anyOf": [
+                        {
+                            "type": "object",
+                            "properties": {
+                                "cols": {
+                                    "description": "Represents the number of the number of grid columns",
+                                    "type": "number"
+                                },
+                                "rows": {
+                                    "description": "Represents the number of the number of grid rows",
+                                    "type": "number"
+                                },
+                                "showOnlyHeader": {
+                                    "description": "Represents if user wants to show only header part of card in resizable layout",
+                                    "type": "boolean"
+                                },
+                                "minimumTitleRow": {
+                                    "description": "If user wants to show more text in title then he/she can configure no of lines to be shown in title(Maximum allowed 3 lines)",
+                                    "type": "number"
+                                },
+                                "minimumSubTitleRow": {
+                                    "description": "If user wants to show more text in title then he/she can configure no of lines to be shown in sub-title(Maximum allowed 2 lines)",
+                                    "type": "number"
+                                }
+                            },
+                            "additionalProperties": false,
+                            "required": [
+                                "cols",
+                                "rows"
+                            ]
+                        },
+                        {
+                            "enum": [
+                                "auto"
+                            ],
+                            "type": "string"
+                        }
+                    ]
+                },
+                "staticContent": {
+                    "description": "Represents the static content that will be displayed in this card",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/StaticContent"
+                    }
+                }
+            },
+            "additionalProperties": false,
+            "required": [
+                "title"
+            ]
+        },
+        "StaticContent": {
+            "description": "staticContent is defined in app descriptor as\nstaticContent?: {\n      [k: string]: any;\n  }[];\nAfter reverse engineering we came to following type:",
+            "type": "object",
+            "properties": {
+                "title": {
+                    "type": "string"
+                },
+                "imageUri": {
+                    "type": "string"
+                },
+                "targetUri": {
+                    "type": "string"
+                },
+                "imageAltText": {
+                    "type": "string"
+                },
+                "semanticObject": {
+                    "type": "string"
+                },
+                "action": {
+                    "type": "string"
+                },
+                "openInNewWindow": {
+                    "type": "boolean"
+                }
+            },
+            "additionalProperties": false,
+            "required": [
+                "title"
+            ]
+        },
+        "ResizableLayoutVariant": {
+            "description": "Represents the resizable layout variant\n\nThis interface was referenced by `undefined`'s JSON-Schema definition\nvia the `patternProperty` \"^cols_[0-9]+$\".",
+            "type": "object",
+            "additionalProperties": {
+                "$ref": "#/definitions/ResizableLayoutVariantCardProperties"
+            }
+        },
+        "ResizableLayoutVariantCardProperties": {
+            "description": "Represents the card properties is a layout variant\n\nThis interface was referenced by `ResizableLayoutVariant`'s JSON-Schema definition\nvia the `patternProperty` \"^[a-zA-Z0-9_\\.\\-]+$\".",
+            "type": "object",
+            "properties": {
+                "col": {
+                    "description": "Represents the grid column",
+                    "type": "number"
+                },
+                "row": {
+                    "description": "Represents the grid row",
+                    "type": "number"
+                },
+                "colSpan": {
+                    "description": "Represents the column span",
+                    "type": "number"
+                },
+                "rowSpan": {
+                    "description": "Represents the row span",
+                    "type": "number"
+                },
+                "visible": {
+                    "description": "Represents the visibility of the card",
+                    "type": "boolean"
+                }
+            },
+            "additionalProperties": false,
+            "required": [
+                "col",
+                "colSpan",
+                "row",
+                "rowSpan"
+            ]
+        }
+    },
+    "$schema": "http://json-schema.org/draft-07/schema#"
+}
