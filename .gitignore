@@ -24,3 +24,4 @@ mta_archives/
 
 *.db-journal
 .vscode
+*.mta

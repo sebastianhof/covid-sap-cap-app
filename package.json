@@ -1,28 +1,48 @@
 {
-  "name": "covid-sap-cap-app",
+  "name": "cap.covid",
   "version": "1.0.0",
-  "description": "A simple CAP project.",
-  "repository": "<Add your repository here>",
-  "license": "ISC",
+  "description": "A simple CAP project for displaying Covid-19 cases.",
+  "repository": "https://github.com/sebastianhof/covid-sap-cap-app",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": "12.14.0"
+  },
   "dependencies": {
     "@sap/cds": "^3",
+    "@sap/cds-odata-v2-adapter-proxy": "^1.4.21",
+    "@sap/hana-client": "^2.4.182",
+    "@sap/xsenv": "^2.2.0",
+    "@sap/xssec": "^2.2.5",
     "crypto": "^1.0.1",
     "csvtojson": "^2.0.10",
     "express": "^4",
     "geojson": "^0.5.0",
-    "moment": "^2.24.0"
+    "moment": "^2.24.0",
+    "passport": "^0.4.1",
+    "uuid": "^7.0.2"
+  },
+  "devDependencies": {
+    "sqlite3": "^4.1.1"
   },
   "scripts": {
-    "start": "npx cds run"
+    "start": "npx cds run",
+    "build": "cds build/all && cds deploy",
+    "build-mta": "mbt build -p=cf",
+    "deploy-mta": "cf deploy .\\mta_archives\\cap.covid_1.0.0.mtar"
   },
   "cds": {
     "requires": {
       "db": {
-        "kind": "sqlite"
+        "kind": "hana"
+      },
+      "uaa": {
+        "kind": "xsuaa"
+      }
+    },
+    "[production]": {
+      "hana": {
+        "syntax": "hdi"
       }
     }
-  },
-  "devDependencies": {
-    "sqlite3": "^4.1.1"
   }
 }
