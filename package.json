@@ -18,7 +18,8 @@
     "express": "^4",
     "geojson": "^0.5.0",
     "moment": "^2.24.0",
-    "passport": "^0.4.1"
+    "passport": "^0.4.1",
+    "uuid": "^7.0.2"
   },
   "devDependencies": {
     "sqlite3": "^4.1.1"

@@ -1,5 +1,5 @@
 var circles = [];
-var initDate = '2001-02-23t09:00:00';
+var mapboxAccessToken = 'pk.eyJ1Ijoic2ViYXN0aWFuaG9mIiwiYSI6ImNrODc3N2VnYjA2bmkzZW9paWQ1OTczbGoifQ.FN2MheiR-FbXIqalc294bA';
 var timeFormatter = d3.timeFormat('%Y-%m-%dt%H:%M:%S');
 var numberFormatter = d3.format(",");
 
@@ -26,7 +26,11 @@ var theMap = L.map('map', {
 theMap.attributionControl.addAttribution('COVID-19 (2019-nCoV) <a href="https://github.com/CSSEGISandData/COVID-19">JHU CSSE</a>');
 theMap.attributionControl.addAttribution('Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Map data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>');
 
-L.tileLayer('http://tile.stamen.com/terrain/{z}/{x}/{y}.png').addTo(theMap);
+L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=' + mapboxAccessToken, {
+    id: 'mapbox/light-v9',
+    tileSize: 512,
+    zoomOffset: -1
+}).addTo(theMap);
 // center of map 
 // Walldorf Germany
 theMap.setView([49.30637, 8.64236], 4);
@@ -58,8 +62,8 @@ function renderCircles() {
     });
 }
 
-function fetchData(dateStr) {
-    var url = '../geojson';
+function fetchData() {
+    var url = '/geojson';
     d3.json(url).then(function (response) {
 
         if (response == null)
@@ -70,4 +74,4 @@ function fetchData(dateStr) {
     });
 }
 
-fetchData(initDate);
+fetchData();
