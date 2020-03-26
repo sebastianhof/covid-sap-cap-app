@@ -4,17 +4,11 @@ const odatav2proxy = require('@sap/cds-odata-v2-adapter-proxy');
 const moment = require('moment');
 const GeoJSON = require('geojson');
 
-const {index} = require ('@sap/cds/lib/utils/app/index_html')
-
-
 module.exports = async (options) => {
     const app = cds.app = options.app || express();
 
     // mount static resources and common middlewares...
     app.use (express.static (cds.env.folders.app));  //> defaults to ./app
-    app.get ('/',(_,res) => res.send (index.html))
-    app.get ('/service',(_,res) => res.send (index.html))
-
 
     // load specified models or all in project
     const model = cds.model = options.from = await cds.load(options.from || '*');

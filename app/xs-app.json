@@ -1,13 +1,47 @@
 {
-    "welcomeFile": "/index.html",
+    "welcomeFile": "index.html",
     "authenticationMethod": "route",
     "routes": [
-    {
-        "source": "^(.*)$",
-        "target": "$1",
-        "authenticationType": "xsuaa",
-        "destination": "cap.covid.api",
-        "localDir": "./"
-
-    }]
+        {
+            "source": "/index.html",
+            "target": "index.html",
+            "localDir": "."
+        },
+        {
+            "source": "^/cases/(.*)$",
+            "target": "$1",
+            "authenticationType": "xsuaa",
+            "localDir": "cases/"
+        },
+        {
+            "source": "^/confirmed/(.*)$",
+            "target": "$1",
+            "authenticationType": "xsuaa",
+            "localDir": "confirmed/"
+        },
+        {
+            "source": "^/deaths/(.*)$",
+            "target": "$1",
+            "authenticationType": "xsuaa",
+            "localDir": "deaths/"
+        },
+        {
+            "source": "^/recovered/(.*)$",
+            "target": "$1",
+            "authenticationType": "xsuaa",
+            "localDir": "recovered/"
+        },
+        {
+            "source": "^/map/(.*)$",
+            "target": "$1",
+            "authenticationType": "xsuaa",
+            "localDir": "map/"
+        },
+        {
+            "source": "^/(.*)$",
+            "target": "$1",
+            "authenticationType": "xsuaa",
+            "destination": "cap.covid.api"
+        }
+    ]
 }
