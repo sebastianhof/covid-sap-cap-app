@@ -39,10 +39,8 @@
         "kind": "xsuaa"
       }
     },
-    "[production]": {
-      "hana": {
-        "syntax": "hdi"
-      }
+    "hana": {
+      "syntax": "hdi"
     }
   }
 }
